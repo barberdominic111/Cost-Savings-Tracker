@@ -12,17 +12,22 @@ There is no backend in this version.
 
 ```
 .
-├── index.html            entry HTML (loads fonts, mounts the app)
-├── vite.config.js         Vite + PWA plugin config (manifest, service worker)
-├── package.json
-├── public/
-│   ├── icon-192.png       app icon (home screen / install prompt)
-│   └── icon-512.png       app icon (splash / store listing size)
+├── index.html
+├── vite.config.js          Vite + PWA plugin
+├── package.json            scripts: dev, build, preview, test
+├── docs/
+│   ├── FORMULAS.md         every formula, units, default-hours basis
+│   └── JSON_CONTRACTS.md   export/import contracts (TimeStudy/WorkStudy assumed)
+├── public/                 icon-192.png, icon-512.png
 └── src/
-    ├── main.jsx           React root
-    ├── App.jsx            the entire app (all 6 tabs, calc engine, matrix config)
-    └── index.css          minimal global reset
+    ├── main.jsx, App.jsx   app root: state, save/revision/import handlers
+    ├── theme.js, ui.jsx    theme tokens + shared primitives
+    ├── engine/             PURE logic: formulas, matrix config, default basis, finance summary (+ tests)
+    ├── data/               data model fields, records/migration/export/import, localStorage (+ tests)
+    └── tabs/               one file per tab
 ```
+
+Run `npm test` for the formula, migration, export/import and render smoke tests.
 
 ## 1. Run it locally first (optional but recommended)
 
