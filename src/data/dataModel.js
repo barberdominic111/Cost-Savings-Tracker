@@ -1,0 +1,75 @@
+export const DEFAULT_DATA_MODEL = {
+  plantName: "", department: "", workCenter: "", processType: "Assembly",
+  directLaborRate: 28, variableBurdenRate: 12, fixedOverheadRate: 18, fullyLoadedLaborRate: 58, workHoursPerYear: 2080,
+  numDirectLaborEmployees: 12, avgEmployeeLoadedCost: 62000, avgTempLaborRate: 24, tempConversionCost: 1500, overtimeMultiplier: 1.5,
+  annualVolume: 120000, weeklyVolume: 2300, monthlyVolume: 10000, unitsPerHour: 45, demandGrowthRate: 3, currentBottleneckWorkCenter: "",
+  currentCycleTime: 0.05, improvedCycleTime: 0.04,
+  currentSetupTime: 30, improvedSetupTime: 15, setupsPerYear: null,
+  currentReworkTime: 5, improvedReworkTime: 2, reworkUnitsPerYear: null,
+  currentScrapPct: 4, futureScrapPct: 2, materialCostPerUnit: 6.5, laborContentPerUnit: 1.2, reworkCostPerUnit: 3.1,
+  currentMaterialCost: 6.5, futureMaterialCost: 6.1, packagingCost: 0.35, futurePackagingCost: null, freightCost: 0.2, disposalCost: 0.05,
+  sqFtCost: 8, equipmentCost: 45000, equipmentDepreciation: 9000, maintenanceCost: 4000,
+};
+
+/* used: true = feeds a calculation default; "optional" = optional/offset only; false = informational (not used in any calculation) */
+export const FIELD_GROUPS = [
+  { title: "Plant Information", fields: [
+    { key: "plantName", label: "Plant Name", type: "text", used: false },
+    { key: "department", label: "Department", type: "text", used: false },
+    { key: "workCenter", label: "Work Center", type: "text", used: false },
+    { key: "processType", label: "Process Type", type: "select", options: ["Assembly", "Machining", "Injection Molding", "Packaging", "Other"], used: false },
+  ] },
+  { title: "Labor Cost Model", fields: [
+    { key: "directLaborRate", label: "Direct Labor Rate ($/hr)", type: "number", used: true },
+    { key: "variableBurdenRate", label: "Variable Labor Burden Rate ($/hr)", type: "number", used: true },
+    { key: "fixedOverheadRate", label: "Fixed Overhead Rate ($/hr)", type: "number", used: true },
+    { key: "fullyLoadedLaborRate", label: "Fully Loaded Labor Rate ($/hr)", type: "number", used: false },
+    { key: "workHoursPerYear", label: "Work Hours Per Year", type: "number", used: false },
+  ] },
+  { title: "Labor Resource Model", fields: [
+    { key: "numDirectLaborEmployees", label: "# Direct Labor Employees", type: "number", used: false },
+    { key: "avgEmployeeLoadedCost", label: "Avg Employee Loaded Cost ($/yr)", type: "number", used: false },
+    { key: "avgTempLaborRate", label: "Avg Temp Labor Rate ($/hr)", type: "number", used: true },
+    { key: "tempConversionCost", label: "Temp Conversion Cost ($, one-time)", type: "number", used: "optional" },
+    { key: "overtimeMultiplier", label: "Avg Overtime Multiplier (x)", type: "number", used: true },
+  ] },
+  { title: "Production Model", fields: [
+    { key: "annualVolume", label: "Annual Volume (units)", type: "number", used: true },
+    { key: "weeklyVolume", label: "Weekly Volume (units)", type: "number", used: false },
+    { key: "monthlyVolume", label: "Monthly Volume (units)", type: "number", used: false },
+    { key: "unitsPerHour", label: "Units per Hour", type: "number", used: false },
+    { key: "demandGrowthRate", label: "Demand Growth Rate (%)", type: "number", used: false },
+    { key: "currentBottleneckWorkCenter", label: "Current Bottleneck Work Center", type: "text", used: false },
+  ] },
+  { title: "Time Model", fields: [
+    { key: "currentCycleTime", label: "Current Cycle Time (hrs/unit)", type: "number", used: true },
+    { key: "improvedCycleTime", label: "Improved Cycle Time (hrs/unit)", type: "number", used: true },
+    { key: "currentSetupTime", label: "Current Setup Time (min)", type: "number", used: true },
+    { key: "improvedSetupTime", label: "Improved Setup Time (min)", type: "number", used: true },
+    { key: "setupsPerYear", label: "Setups Per Year (new)", type: "number", used: true, hint: "Needed for Setup Reduction hours." },
+    { key: "currentReworkTime", label: "Current Rework Time (min per reworked unit)", type: "number", used: true },
+    { key: "improvedReworkTime", label: "Improved Rework Time (min per reworked unit)", type: "number", used: true },
+    { key: "reworkUnitsPerYear", label: "Reworked Units Per Year (new)", type: "number", used: true, hint: "Needed for Rework Reduction hours." },
+  ] },
+  { title: "Quality Model", fields: [
+    { key: "currentScrapPct", label: "Current Scrap %", type: "number", used: true },
+    { key: "futureScrapPct", label: "Future Scrap %", type: "number", used: true },
+    { key: "materialCostPerUnit", label: "Material Cost Per Unit ($)", type: "number", used: true },
+    { key: "laborContentPerUnit", label: "Labor Content Per Unit (hrs)", type: "number", used: true },
+    { key: "reworkCostPerUnit", label: "Rework Cost Per Unit ($)", type: "number", used: false },
+  ] },
+  { title: "Material Model", fields: [
+    { key: "currentMaterialCost", label: "Current Material Cost ($/unit)", type: "number", used: true },
+    { key: "futureMaterialCost", label: "Future Material Cost ($/unit)", type: "number", used: true },
+    { key: "packagingCost", label: "Packaging Cost ($/unit)", type: "number", used: true },
+    { key: "futurePackagingCost", label: "Future Packaging Cost ($/unit) (new)", type: "number", used: true, hint: "Needed for Packaging Reduction." },
+    { key: "freightCost", label: "Freight Cost ($/unit)", type: "number", used: false },
+    { key: "disposalCost", label: "Disposal Cost ($/unit)", type: "number", used: false },
+  ] },
+  { title: "Space / Asset Model", fields: [
+    { key: "sqFtCost", label: "Square Foot Cost ($/sqft/yr)", type: "number", used: true },
+    { key: "equipmentCost", label: "Equipment Cost ($)", type: "number", used: true },
+    { key: "equipmentDepreciation", label: "Equipment Depreciation ($/yr)", type: "number", used: false },
+    { key: "maintenanceCost", label: "Maintenance Cost ($/yr)", type: "number", used: "optional" },
+  ] },
+];
